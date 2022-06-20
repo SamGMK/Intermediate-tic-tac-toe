@@ -2,7 +2,7 @@
  // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-contract Amateurtictactoe {
+contract IntermediateTictactow {
 
   //GAS 1 for creations and deployment
    //gas	1591344 gas
