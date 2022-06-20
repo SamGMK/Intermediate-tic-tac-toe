@@ -14,6 +14,8 @@ contract IntermediateTictactow {
   //transaction cost	1270564 gas 
   //execution cost	1270564 gas 
 
+
+
    
 
 //stores the board positions. 1 corresponds to the first square in the 3 by 3 board,
@@ -23,11 +25,9 @@ uint8[9] public boardPositions;
 uint8 public makeMoveCounter = 0;
 
     
-//stores the player addresses
-address[2] public playerIndex;
 
-address public playerOne = playerIndex[0];
-address public playerTwo = playerIndex[1];
+address immutable public playerOne;
+address immutable public playerTwo;
 
 enum AllowedPlays{X, O}
 
@@ -47,7 +47,7 @@ constructor(address _playerOne, address _playerTwo) payable {
 }
 
 
-fallback(bytes calldata _data)external returns(bytes memory) {
+fallback(bytes calldata _data)external returns(bytes memory ) {
     require(checkTurn(msg.sender) == true, "Not your turn");
     onlyPlayer(msg.sender);
     onlyPlayerOneStarts();
