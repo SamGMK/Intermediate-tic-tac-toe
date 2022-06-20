@@ -1,21 +1,20 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
 
-contract IntermediateTictactoe {
-
-// SPDX-License-Identifier: UNLICENSED
+ // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
 contract Amateurtictactoe {
-    //GAS for function makeMove
-    //gas	119346 gas
-    //transaction cost	103779 gas 
-   //execution cost	103779 gas 
 
-   //GAS for creations and deployment
+  //GAS 1 for creations and deployment
    //gas	1591344 gas
    //transaction cost	1383777 gas 
    //execution cost	1383777 gas 
+
+    //GAS 2 With fallback for creation and deployment
+   //gas	1461149 gas
+  //transaction cost	1270564 gas 
+  //execution cost	1270564 gas 
+
+   
 
 //stores the board positions. 1 corresponds to the first square in the 3 by 3 board,
 //2 corresponds to the seconds square in the 3 by 3 board etc.
@@ -47,15 +46,12 @@ constructor(address _playerOne, address _playerTwo) payable {
     
 }
 
-modifier onlyPlayers(){
-    require(msg.sender == playerOne || msg.sender == playerTwo);
-    _;
-}
 
-
-function makeMove(uint8 _move) external {
+fallback(bytes calldata _data)external returns(bytes memory) {
     require(checkTurn(msg.sender) == true, "Not your turn");
+    onlyPlayer(msg.sender);
     onlyPlayerOneStarts();
+    (uint8 _move) = abi.decode(_data, (uint8));
     onlyEmptyPosition(_move);
     makeMoveCounter++;
 
@@ -137,8 +133,6 @@ function checkWinner()internal view returns(uint8) {
       } 
     
 }
-
-
 
 
 }
