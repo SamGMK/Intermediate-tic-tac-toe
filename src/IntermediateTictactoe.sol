@@ -53,7 +53,7 @@ modifier onlyPlayers(){
 }
 
 
-function makeMove(uint8 _move)public {
+function makeMove(uint8 _move) external {
     require(checkTurn(msg.sender) == true, "Not your turn");
     onlyPlayerOneStarts();
     onlyEmptyPosition(_move);
