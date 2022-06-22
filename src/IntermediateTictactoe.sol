@@ -33,7 +33,7 @@ constructor(address _playerOne, address _playerTwo) payable {
     //than a new one
     //i is also not intialized to 0 to save on gas, since it is default 0
     for(uint i; i < 10; ++i ) {
-       boardPositions[i] = AllowedPlays.EMPTY;
+       boardPositions[i] = uint8(AllowedPlays.EMPTY);
     }
     
 }
@@ -44,15 +44,13 @@ constructor(address _playerOne, address _playerTwo) payable {
 /// @param _data The move the player has made i.e index for the boardPosition
 /// @return returns bool to show if the move was successful or not
 fallback(bytes calldata _data)external returns(bytes memory ) {
+  //perform all the required checks before state changes
     require(checkTurn(msg.sender) == true, "Not your turn");
     onlyPlayer(msg.sender);
     onlyPlayerOneStarts();
     (uint8 _move) = abi.decode(_data, (uint8));
     onlyEmptyPosition(_move);
     makeMoveCounter++;
-
-    //update the position to occupied 
-    _isPositionOccupied[_move] = 1;
 
     //assigning its value depending on user
     //If playerOne then assign X. If playerTwo then assing O.
@@ -87,28 +85,28 @@ function checkWinner()internal view returns(uint8) {
 //if a winner is found, then self destruct and print Game Over
      uint8[9] memory _boardPositions = boardPositions; //gas saving
 
-    if(_boardPositions[0] != AllowedPlays.EMPTY && _boardPositions[0] == _boardPositions[1] && _boardPositions[0] == _boardPositions[2]) {
+    if(_boardPositions[0] != uint8(AllowedPlays.EMPTY) && _boardPositions[0] == _boardPositions[1] && _boardPositions[0] == _boardPositions[2]) {
         return _boardPositions[0];
       } 
-    if(_boardPositions[3] != AllowedPlays.EMPTY && _boardPositions[3] == _boardPositions[4] && _boardPositions[3] == _boardPositions[5]) {
+    if(_boardPositions[3] != uint8(AllowedPlays.EMPTY) && _boardPositions[3] == _boardPositions[4] && _boardPositions[3] == _boardPositions[5]) {
         return _boardPositions[3];
       } 
-    if(_boardPositions[6] != AllowedPlays.EMPTY && _boardPositions[6] == _boardPositions[7] && _boardPositions[6] == _boardPositions[8]) {
+    if(_boardPositions[6] != uint8(AllowedPlays.EMPTY) && _boardPositions[6] == _boardPositions[7] && _boardPositions[6] == _boardPositions[8]) {
         return _boardPositions[6];
       } 
-    if(_boardPositions[0] != AllowedPlays.EMPTY && _boardPositions[0] == _boardPositions[3] && _boardPositions[0] == _boardPositions[6]) {
+    if(_boardPositions[0] != uint8(AllowedPlays.EMPTY) && _boardPositions[0] == _boardPositions[3] && _boardPositions[0] == _boardPositions[6]) {
         return _boardPositions[0];
       } 
-    if(_boardPositions[1] != AllowedPlays.EMPTY && _boardPositions[1] == _boardPositions[4] && _boardPositions[1] == _boardPositions[7]) {
+    if(_boardPositions[1] != uint8(AllowedPlays.EMPTY) && _boardPositions[1] == _boardPositions[4] && _boardPositions[1] == _boardPositions[7]) {
         return _boardPositions[1];
       } 
-    if(_boardPositions[2] != AllowedPlays.EMPTY && _boardPositions[2] == _boardPositions[5] && _boardPositions[2] == _boardPositions[8]) {
+    if(_boardPositions[2] != uint8(AllowedPlays.EMPTY) && _boardPositions[2] == _boardPositions[5] && _boardPositions[2] == _boardPositions[8]) {
         return _boardPositions[2];
       } 
-    if(_boardPositions[0] != AllowedPlays.EMPTY && _boardPositions[0] == _boardPositions[4] && _boardPositions[0] == _boardPositions[8]) {
+    if(_boardPositions[0] != uint8(AllowedPlays.EMPTY) && _boardPositions[0] == _boardPositions[4] && _boardPositions[0] == _boardPositions[8]) {
         return _boardPositions[0];
       } 
-    if(_boardPositions[2] != AllowedPlays.EMPTY && _boardPositions[2] == _boardPositions[4] && _boardPositions[2] == _boardPositions[6]) {
+    if(_boardPositions[2] != uint8(AllowedPlays.EMPTY) && _boardPositions[2] == _boardPositions[4] && _boardPositions[2] == _boardPositions[6]) {
         return _boardPositions[2];
       } 
     
