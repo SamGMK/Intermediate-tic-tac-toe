@@ -27,11 +27,16 @@ uint8 public makeMoveCounter = 0;
 constructor(address _playerOne, address _playerTwo) payable {
     playerOne = _playerOne;
     playerTwo = _playerTwo;
+
+    for(uint i = 0, ) {
+
+    }
     
 }
 
 /// @notice called when a player wants to make a move
-/// @dev fallback function is used instead of a regular function to save on gas
+/// @dev Fallback function is used instead of a regular function to save on gas.
+///This is because the Fallback function doesn't require a function signature to call.
 /// @param _data The move the player has made i.e index for the boardPosition
 /// @return returns bool to show if the move was successful or not
 fallback(bytes calldata _data)external returns(bytes memory ) {
@@ -67,43 +72,6 @@ fallback(bytes calldata _data)external returns(bytes memory ) {
     
 }
 
-/// @notice Checks if the _caller is a registered player
-/// @dev function was used instead of a modifier to save on gas
-/// @param _caller is the address that wants to make the move
-function onlyPlayer(address _caller) internal view {
-   require(_caller == playerOne || _caller == playerTwo, "Not Player");
-}
-
-
-/// @notice Ensures that the first player to make move is player One
-/// @dev This is to help the check turn functionality
-function onlyPlayerOneStarts() internal view {
-    if(makeMoveCounter == 0){
-         require(msg.sender == playerOne, "Not Player One");
-    }
-}
-
-
-/// @notice Ensures only an empty position can be played
-/// @param _move is the index of the board positions
-function onlyEmptyPosition(uint8 _move) internal view {
-    require(_isPositionOccupied[_move] != AllowedPlays.EMPTY, "Move not Valid");
-}
-
-
-/// @notice Checks if it is a players turn to play
-/// @dev if player one plays(1 move) then he can only play is player two has also played(1 move)
-/// @param _nextMovePlayer a parameter just like in doxygen (must be followed by parameter name)
-/// @return true if it is the player's turn else false.
-function checkTurn(address _nextMovePlayer) internal view returns(bool) {
-    if (playerOne == _nextMovePlayer && _numberOfPlays[_nextMovePlayer] == _numberOfPlays[playerTwo]) {
-         return true;
-       } else if (playerTwo == _nextMovePlayer && _numberOfPlays[_nextMovePlayer] < _numberOfPlays[playerOne]) {
-         return true;
-       } 
-       else{return false;}
-
-}
 
 
 /// @notice Checks if any player has made three similar moves that result in a win
@@ -141,6 +109,49 @@ function checkWinner()internal view returns(uint8) {
       } 
     
 }
+
+//@Notice All the below functions could have been modifiers instead functions were used. This is because 
+//when using modifiers, the code of the modifiers is inserted at the start of the function at compile time, 
+//which can massively ballon code size.
+
+/// @notice Checks if the _caller is a registered player
+/// @dev function was used instead of a modifier to save on gas
+/// @param _caller is the address that wants to make the move
+function onlyPlayer(address _caller) internal view {
+   require(_caller == playerOne || _caller == playerTwo, "Not Player");
+}
+
+
+/// @notice Ensures that the first player to make move is player One
+/// @dev This is to help the check turn functionality
+function onlyPlayerOneStarts() internal view {
+    if(makeMoveCounter == 0){
+         require(msg.sender == playerOne, "Not Player One");
+    }
+}
+
+
+/// @notice Ensures only an empty position can be played
+/// @param _move is the index of the board positions
+function onlyEmptyPosition(uint8 _move) internal view {
+    require(boardPositions[_move] == AllowedPlays.EMPTY, "Move not Valid");
+}
+
+
+/// @notice Checks if it is a players turn to play
+/// @dev if player one plays(1 move) then he can only play is player two has also played(1 move)
+/// @param _nextMovePlayer a parameter just like in doxygen (must be followed by parameter name)
+/// @return true if it is the player's turn else false.
+function checkTurn(address _nextMovePlayer) internal view returns(bool) {
+    if (playerOne == _nextMovePlayer && _numberOfPlays[_nextMovePlayer] == _numberOfPlays[playerTwo]) {
+         return true;
+       } else if (playerTwo == _nextMovePlayer && _numberOfPlays[_nextMovePlayer] < _numberOfPlays[playerOne]) {
+         return true;
+       } 
+       else{return false;}
+
+}
+
 
 
 }
