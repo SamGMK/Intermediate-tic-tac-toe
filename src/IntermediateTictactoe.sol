@@ -16,7 +16,7 @@ uint8 public makeMoveCounter = 0;
 address immutable public playerOne;
 address immutable public playerTwo;
 
-enum AllowedPlays{X, O}
+enum AllowedPlays{Empty, X, O}
 
 //Stores number of plays per player to ensure turns
 //NBBB: FIND A WAY TO UPDATE THIS MAPPING AFTER EVERY PLAY
