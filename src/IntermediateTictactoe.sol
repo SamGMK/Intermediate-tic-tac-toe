@@ -4,24 +4,11 @@ pragma solidity ^0.8.0;
 
 contract IntermediateTictactow {
 
-  //GAS 1 for creations and deployment
-   //gas	1591344 gas
-   //transaction cost	1383777 gas 
-   //execution cost	1383777 gas 
-
-    //GAS 2 With fallback for creation and deployment
-   //gas	1461149 gas
-  //transaction cost	1270564 gas 
-  //execution cost	1270564 gas 
-
-
-
-   
-
 //stores the board positions. 1 corresponds to the first square in the 3 by 3 board,
 //2 corresponds to the seconds square in the 3 by 3 board etc.
 uint8[9] public boardPositions;
-//Ensures first player is playerOne
+//ADD A STRCUT TO PACK boardPositions and bool for isPositionOccupied
+//Ensures first player is playerOne 
 uint8 public makeMoveCounter = 0;
 
     
@@ -35,6 +22,7 @@ enum AllowedPlays{X, O}
 //NBBB: FIND A WAY TO UPDATE THIS MAPPING AFTER EVERY PLAY
 mapping(address => uint8) public _numberOfPlays;
 //stores the number if the position for if the move has been made or not(i.e 1 equals move made, 0 equals move is valid)
+//Remove this mapping and add a bool in a struct
 mapping(uint8 => uint8) public _isPositionOccupied;
 
 //stores the possible win combos
