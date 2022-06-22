@@ -31,10 +31,11 @@ constructor(address _playerOne, address _playerTwo) payable {
     //sets all the boardPositions to empty at compile time. 
     //this also saves on gas as it is cheaper to write to an existing storage slot
     //than a new one
-    //i is also not intialized to 0 to save on gas, since it is default 0
-    for(uint i; i < 10; ++i ) {
-       boardPositions[i] = uint8(AllowedPlays.EMPTY);
-    }
+    AllowedPlays empty = AllowedPlays.EMPTY;
+    uint8 emptyInt = uint8(empty);
+    boardPositions = [emptyInt,emptyInt,emptyInt,emptyInt,emptyInt,emptyInt,emptyInt,emptyInt,emptyInt];
+    
+    
     
 }
 
