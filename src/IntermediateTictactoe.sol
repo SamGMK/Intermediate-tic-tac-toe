@@ -2,7 +2,7 @@
  // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-contract IntermediateTictactow {
+contract IntermediateTictactoe {
 
 
 //stores the board positions. index 0 corresponds to the first square in the 3 by 3 board etc
@@ -136,7 +136,7 @@ function onlyPlayerOneStarts() internal view {
 /// @notice Ensures only an empty position can be played
 /// @param _move is the index of the board positions
 function onlyEmptyPosition(uint8 _move) internal view {
-    require(boardPositions[_move] == AllowedPlays.EMPTY, "Move not Valid");
+    require(boardPositions[_move] == uint8(AllowedPlays.EMPTY), "Move not Valid");
 }
 
 
