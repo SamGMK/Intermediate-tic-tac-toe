@@ -10,7 +10,7 @@ contract IntermediateTictactoe {
 //stores the board positions. index 0 corresponds to the first square in the 3 by 3 board etc
 uint8[9] public boardPositions;
 
-//stores the possible states of the board except empty
+//stores the possible states of the board e
 enum AllowedPlays{EMPTY, X, O}
 
 //addresses of the two player
@@ -19,9 +19,6 @@ address immutable public playerTwo;
 
 //Stores number of plays per player to ensure turns
 mapping(address => uint8) public _numberOfPlays;
-
-//stores a bool for if the board position is occupied or not(i.e 1 equals move made, 0 equals move is valid)
-//mapping(uint8 => uint8) public _isPositionOccupied;
 
 //Ensures first player is playerOne 
 uint8 public makeMoveCounter = 0;
