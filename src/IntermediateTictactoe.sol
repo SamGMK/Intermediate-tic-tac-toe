@@ -3,7 +3,9 @@
 pragma solidity ^0.8.0;
 
 contract IntermediateTictactoe {
-
+  /// @title An optimized Tic tac toe game
+  /// @author SamaterPhi7
+  
 
 //stores the board positions. index 0 corresponds to the first square in the 3 by 3 board etc
 uint8[9] public boardPositions;
